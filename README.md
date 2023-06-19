@@ -1,6 +1,26 @@
+
+- [About](#about)
+  - [To do](#to-do)
+- [pestudio-cli](#pestudio-cli)
+  - [Goal](#goal)
+  - [Dependencies](#dependencies)
+
+# About
+
+This is a project from [Forensics class at Eurecom (spring 2023)](https://www.eurecom.fr/en/course/forensics-2023spring) . The aims of this project is to improve pestudio-cli tool from  [https://github.com/KuechA/pestudio-cli](https://github.com/KuechA/pestudio-cli):
+
+## To do
+
+- [ ] Update the project pestudio-cli (now it throws exceptions due to changes to the lief library).
+
+- [ ] Update it with the newer data and features of pestudio.
+
+- [ ] Add a hole-detection feature which detects whether there is any data "outside" of sections.
+
 # pestudio-cli
 
-### Goal
+## Goal
+
 Our goal is the implementation of a python-based command-line tool which can be used to check PE files for known malicious patterns. We therefore
 * Submit the file to VirusTotal and present a summary of the result to the user
 * Match the PE file against signatures of known malicious programs (the signatures are imported from PEStudio). Currently, these are signatures of packers
@@ -19,7 +39,7 @@ We support multiple output formats and make the output result highly configurabl
 * A human-readable representation containing all the requested information at once
 * An interactive mode can be used in order to show only selected information at a time
 
-### Dependencies
+## Dependencies
 * prettytable python library: `pip3 install prettytable`
 * LIEF to parse the PE file `pip3 install setuptools --upgrade; pip3 install lief`
 * In case files should be submitted to VirusTotal in order to retrieve their score, a [VirusTotal API key](https://www.virustotal.com/en/documentation/public-api/#getting-started) has to be stored in the file `VirusTotalApiKey` in the root of the directory.
