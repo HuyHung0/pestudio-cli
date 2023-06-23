@@ -102,9 +102,9 @@ class PeAnalyzer:
 			print(constants.GREEN + "\tSize of Optional Header is reasonable (%d bytes)" % self.peFile.header.sizeof_optional_header + constants.RESET)
 		
 		# Content of certificate??, expired issuer, expired subject, no digital certificate
-		if not self.peFile.has_signature and jsonDict is None and root is None:
+		if not self.peFile.has_signatures and jsonDict is None and root is None:
 			print(constants.RED + "\tThe PE file has no digital signature" + constants.RESET)
-		elif self.peFile.has_signature:
+		elif self.peFile.has_signatures:
 			maxScore += int(indicators['1039'].severity)
 			for cert in self.peFile.signature.certificates:
 				cert_from = datetime.datetime.fromtimestamp(cert.valid_from)
