@@ -2,6 +2,9 @@
 - [About](#about)
   - [To do](#to-do)
 - [pestudio-cli](#pestudio-cli)
+  - [Some errors and Correction results](#some-errors-and-correction-results)
+    - [Identify some errors](#identify-some-errors)
+    - [Correction results](#correction-results)
   - [Goal](#goal)
   - [Dependencies](#dependencies)
 
@@ -12,6 +15,7 @@ This is a project from [Forensics class at Eurecom (spring 2023)](https://www.eu
 ## To do
 
 - [ ] Update the project pestudio-cli (now it throws exceptions due to changes to the lief library).
+  - [ ] Check old lief and new lief to be not miss any errors.
 
 - [ ] Update it with the newer data and features of pestudio.
 
