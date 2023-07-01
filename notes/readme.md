@@ -17,7 +17,7 @@
 
 ## 2
 
-Errors: This error is also mentioned in Pestudio project - Header Issues and the author also suggested solutions: Change line 1146: machine --> machine.value. or use old version of LIEF library. Here we use the first suggested solution.
+Errors: These errors were also mentioned in Pestudio project - Issues and the author also suggested solutions: Change line 1146: `machine` --> `machine.value`. or use old version of LIEF library. Here we use the first suggested solution.
 
 ![image](images/README/screenshot_23-06-2023_19h29m13.png)
 
@@ -29,6 +29,19 @@ Correction results:
 
 ![image](images/readme/screenshot_01-07-2023_12h11m36.png)
 
+
+
+
+
 ![image](images/README/screenshot_23-06-2023_18h41m49.png)
 
+Error when run `VirusTotalClient.py`. Note that before running, you need to put an API key from virustotal in a file name: `VirusTotalApiKey` in the root folder of the project.
+
 ![image](images/README/screenshot_23-06-2023_18h42m43.png)
+
+Correction: line 126: `print(vt.printReport(report))` --> `print(vt.printReport())`.
+
+
+Result:
+
+![image](images/readme/screenshot_01-07-2023_13h53m36.png)

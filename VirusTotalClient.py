@@ -123,5 +123,5 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 	
 	vt = VirusTotalClient(args.file)
-	print(vt.printReport(report))
+	print(vt.printReport())
 		
