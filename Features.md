@@ -418,4 +418,4 @@ What we support:
 
 Main missing features:
 * Extracting resources and analyzing them further
-* 131 of 176 Indicators are not implemented
+* 131 of 177 Indicators are not implemented
