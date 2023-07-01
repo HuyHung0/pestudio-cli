@@ -1143,7 +1143,7 @@ class PeAnalyzer:
 		
 		table.add_row(["Signature", "".join(["{0:02x}".format(x) for x in self.peFile.header.signature])])
 		machine = self.peFile.header.machine
-		table.add_row(["Machine", constants.MACHINE_TYPE[machine]])
+		table.add_row(["Machine", constants.MACHINE_TYPE[machine.value]])
 		sections = self.peFile.header.numberof_sections
 		table.add_row(["Number of sections", sections])
 		timeDateStamp = datetime.datetime.fromtimestamp(self.peFile.header.time_date_stamps)
