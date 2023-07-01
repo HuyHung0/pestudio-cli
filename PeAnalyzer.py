@@ -518,7 +518,7 @@ class PeAnalyzer:
 			else:
 				table.add_row([constants.RED + str + constants.RESET, indicators['1222'].severity])
 		elif all:
-			print(constants.GREEN + "\tThe last section (name:%s) is not executable" % (self.peFile.sections[-1].name) + constants.RESET)
+			print(constants.GREEN + "\tThe last section (name:%s) is not executable" % (self.peFile.sections[len(self.peFile.sections)-1].name) + constants.RESET)
 		
 		# Size of initialized data
 		min = int(mins.find('InitializedData').text)
