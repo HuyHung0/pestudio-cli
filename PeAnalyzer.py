@@ -382,6 +382,7 @@ class PeAnalyzer:
 			else:
 				table.add_row([constants.RED + str + constants.RESET, indicators['1105'].level])
 		
+		""" 
 		# PE file does not use GS
 		maxScore += int(indicators['1106'].level)
 		maxScore += int(indicators['1107'].level)
@@ -408,7 +409,8 @@ class PeAnalyzer:
 					indicatorXml.text = str
 				else:
 					table.add_row([constants.RED + str + constants.RESET, indicators['1106'].level])
-		
+		"""
+  
 		""" # PE file does not use code integrity
 		maxScore += int(indicators['1109'].level)
 		if self.peFile.has_configuration:
@@ -563,7 +565,7 @@ class PeAnalyzer:
 		# TODO: File references missing library
 		
 		# Check imphash
-		self.checkImphashes()
+		#self.checkImphashes()
 		
 		# More then one executable sections
 		exe_sections = 0
@@ -571,8 +573,12 @@ class PeAnalyzer:
 			if section.has_characteristic(lief.PE.SECTION_CHARACTERISTICS.MEM_EXECUTE):
 				exe_sections += 1
 		
+		item = thresholdRoot.find('.//item[@id="039"]')
+		min = int(item.get('min'))
+		max = int(item.get('max'))
+
 		maxScore += int(indicators['2246'].level) # Same as 1246
-		if not int(mins.find('ExecutableSections').text) <= exe_sections <= int(maxs.find('ExecutableSections').text):
+		if not min <= exe_sections <= max:
 			score += int(indicators['2246'].level)
 			str = "The executable has %d executable sections" % exe_sections
 			if not jsonDict is None:
@@ -866,11 +872,11 @@ class PeAnalyzer:
 					indicatorXml = ET.SubElement(indicatorsXml, "function")
 					indicatorXml.set("level", indicator.level)
 					indicatorXml.text = indicator.text
-		
+		"""
 		if not jsonDict is None:
 			jsonDict["indicators"]["functions"] = jsonResults
 		
-		return score, maxScore, jsonDict, root """
+		return score, maxScore, jsonDict, root 
 	
 	def __getImports(self):
 		self.imports = []
@@ -1060,6 +1066,7 @@ class PeAnalyzer:
 		summary = ET.SubElement(resources, "summary")
 		ET.SubElement(summary, "blacklisted").text = str(len(self.blacklistedRes))
 		ET.SubElement(summary, "total").text = str(len(self.resources))
+		
 		
 		blacklisted = ET.SubElement(resources, "blacklisted")
 		for res in self.blacklistedRes:

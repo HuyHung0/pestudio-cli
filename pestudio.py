@@ -15,9 +15,9 @@ import datetime
 import os
 
 class Indicator:
-	def __init__(self, enable, severity, id, text):
+	def __init__(self, enable, level, id, text):
 		self.enable = enable
-		self.severity = severity
+		self.level = level
 		self.id = id
 		self.text = text
 
@@ -46,7 +46,7 @@ def parseIndicators():
 	indicators = {}
 	root = ET.parse("xml/indicators.xml").getroot().find('indicators')
 	for indicator in root.findall('indicator'):
-		indicators[indicator.attrib['id']] = Indicator(indicator.attrib['enable'], indicator.attrib['severity'], indicator.attrib['id'], indicator.text)
+		indicators[indicator.attrib['id']] = Indicator(indicator.attrib['enable'], indicator.attrib['level'], indicator.attrib['id'], indicator.text)
 	
 	return indicators
 
@@ -73,18 +73,18 @@ def collectIndicators(vt, peAnalyzer, matcher, all = False, root = None, jsonDic
 		vt.getReport()
 		min = int(mins.find('VirustotalEnginesPositiv').text)
 		max = int(maxs.find('VirustotalEnginesPositiv').text)
-		maxScore += int(indicators['1120'].severity)
+		maxScore += int(indicators['1120'].level)
 		if min <= vt.report['positives'] <= max and jsonDict is None and root is None:
 			vtRes = constants.GREEN + "\t"
 		elif jsonDict is None and root is None:
 			vtRes = constants.RED
-			score += int(indicators['1120'].severity)
+			score += int(indicators['1120'].level)
 		vtRes += "VirusTotal result: " + str(vt.report['positives']) + " of " + str(vt.report['total']) + " tests are positive" + constants.RESET
 		if min <= vt.report['positives'] <= max:
 			print(vtRes)
 		else:
 			if jsonDict is None and root is None:
-				table.add_row([vtRes, indicators['1120'].severity])
+				table.add_row([vtRes, indicators['1120'].level])
 	except:
 		if jsonDict is None and root is None:
 			print(constants.BLUE + "\tNo connection to VirusTotal possible" + constants.RESET)
@@ -124,12 +124,12 @@ def collectIndicators(vt, peAnalyzer, matcher, all = False, root = None, jsonDic
 		elif all:
 			print(constants.GREEN + "\tNo blacklisted imports found" + constants.RESET)
 		
-		# Blacklisted resources
+		""" # Blacklisted resources
 		resources = peAnalyzer.blacklistedResources()
 		if len(resources):
 			print(constants.RED + "\t%d blacklisted resources found" % (len(resources)) + constants.RESET)
 		elif all:
-			print(constants.GREEN + "\tNo blacklisted resources found" + constants.RESET)
+			print(constants.GREEN + "\tNo blacklisted resources found" + constants.RESET) """
 		
 		# tls callbacks
 		if peAnalyzer.peFile.has_tls:
@@ -144,11 +144,7 @@ def collectIndicators(vt, peAnalyzer, matcher, all = False, root = None, jsonDic
 			print(constants.GREEN + "\tThe binary uses no relocations" + constants.RESET)
 		
 		# Blacklisted strings
-		blacklisted, insults, keys = peAnalyzer.getBlacklistedStrings(False)
-		if insults > 0:
-			print(constants.RED + "\t%d insults found in the file" % (insults) + constants.RESET)
-		elif all:
-				print(constants.GREEN + "\tNo insults found in the file" + constants.RESET)
+		blacklisted, keys = peAnalyzer.getBlacklistedStrings(False)
 		
 		if keys > 0:
 			print(constants.RED + "\t%d keyboard keys are used by the file" % (keys) + constants.RESET)
@@ -170,14 +166,14 @@ def collectIndicators(vt, peAnalyzer, matcher, all = False, root = None, jsonDic
 	## end if: summary only for user interface mode
 	
 	if not jsonDict is None:
-		jsonDict["indicators"]["summary"] = {"Severity": str(score), "MaxSeverity": str(maxScore)}
+		jsonDict["indicators"]["summary"] = {"Level": str(score), "MaxLevel": str(maxScore)}
 	elif not root is None:
 		indicatorsXml = root.find("indicators")
 		indicatorsScore = ET.SubElement(indicatorsXml, "Summary")
-		ET.SubElement(indicatorsScore, "MaxSeverity").text = str(maxScore)
-		ET.SubElement(indicatorsScore, "Severity").text = str(score)
+		ET.SubElement(indicatorsScore, "MaxLevel").text = str(maxScore)
+		ET.SubElement(indicatorsScore, "Level").text = str(score)
 	else:
-		table.field_names = ["Description", "Severity(" + str(score) + "/" + str(maxScore) + ")"]
+		table.field_names = ["Description", "Level(" + str(score) + "/" + str(maxScore) + ")"]
 		print(table)
 	return jsonDict, root
 
@@ -292,8 +288,8 @@ def interactiveMode(file = None):
 		elif user_in == "exports" or user_in == "e":
 			peAnalyzer.printExports()
 		elif user_in == "resources" or user_in == "r":
-			blacklistedResources = peAnalyzer.blacklistedResources()
-			print("Blacklisted resources found: " + str(blacklistedResources) if len(blacklistedResources) > 0 else "No blacklisted resources found")
+			#blacklistedResources = peAnalyzer.blacklistedResources()
+			#print("Blacklisted resources found: " + str(blacklistedResources) if len(blacklistedResources) > 0 else "No blacklisted resources found")
 			peAnalyzer.showAllResources()
 		elif user_in == "virusTotal" or user_in == "v":
 			print(vt.printReport())
@@ -433,7 +429,7 @@ def checkFile(args):
 		else:
 			peAnalyzer.printRelocations()
 	
-	if args.resources:
+	""" if args.resources:
 		blacklistedResources = peAnalyzer.blacklistedResources()
 		
 		if args.xml:
@@ -444,7 +440,7 @@ def checkFile(args):
 			print("Blacklisted resources found: " + str(blacklistedResources) if len(blacklistedResources) > 0 else "No blacklisted resources found")
 			# TODO: Check resource types and corresponding thresholds in thresholds.xml
 			
-			peAnalyzer.showAllResources()
+			peAnalyzer.showAllResources() """
 	
 	if args.dumpRes:
 		peAnalyzer.dumpResourcesToFile()
