@@ -10,7 +10,7 @@ class Signature:
 		self.ep = ep
 
 	def __str__(self):
-		return "\"" + self.name + "\" having signature " + self.sig + ", ep: " + str(self.ep)
+		return "\"" + self.name + "\" having signature " + self.sig + ", flag: " + str(self.ep)
 
 class SignatureMatcher:
 	def __init__(self, file):
@@ -26,12 +26,14 @@ class SignatureMatcher:
 		for sig in sigs.findall('sig'):
 			name = sig.find('text').text
 			signature = sig.find('pattern').text
+			if signature == None:
+				continue
 			signature = re.sub(r"\s+", "", signature)
 			signature = signature.replace("x", ".").lower()
 			if len(signature) > self.maxSize:
 				self.maxSize = len(signature)
-			ep = sig.find('ep').text == 'true'
-			self.signatures.append(Signature(name, signature, ep))
+			flag = sig.get('flag') == "1"
+			self.signatures.append(Signature(name, signature, flag))
 		return self.signatures, self.maxSize
 
 	def findPackers(self):
