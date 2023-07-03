@@ -1,10 +1,11 @@
 
 - [About](#about)
-  - [To do](#to-do)
-  - [Notes](#notes)
+	- [To do](#to-do)
+- [What is new](#what-is-new)
+	- [Installation](#installation)
 - [pestudio-cli](#pestudio-cli)
-  - [Goal](#goal)
-  - [Dependencies](#dependencies)
+	- [Goal](#goal)
+	- [Dependencies](#dependencies)
 
 # About
 
@@ -18,12 +19,51 @@ This is a project from [Forensics class at Eurecom (spring 2023)](https://www.eu
 
 - [ ] Add a hole-detection feature which detects whether there is any data "outside" of sections.
 
-## Notes
+# What is new
 
-In [notes/](notes/) folder:
+We first fixed the tools. Some errors and correction result is in [notes/readme.md #identify-errors-and-correction-results](notes/readme.md#identify-errors-and-correction-results).
 
-- [notes/readme.md](notes/readme.md): Contain all a note with screenshots of some errors and solution.
+Then we update the folder xml with newest file from pestudio 9.53. There is a lot of changes: they introduces new files, remove some files. The structures, key words inside the xml files also changes a lot.
 
+After update the folder xml, we fix all the python files to be able using the new xml folder. Some indicators have to remove since there are no corresponding indicator and threshold to compare in the new xml file.
+
+Then we implement a new feature name HolesDetection. For detail, see [notes/readme.md#holes-detection-feature](notes/readme.md#hole-detection-feature).
+
+We haven't update the file [Features.md](Feature.md) with the new version of xml folder yet.
+
+You can check the folder [xml_old](xml_old/) to see the old version of xml folder.
+
+## Installation 
+Run the file setup.sh to install the depences.
+
+Below are some example of running (suppose that we are in the root folder of the project).
+
+To run our feature:
+```zsh
+python3 pestudio.py
+>> f tests/tls_upx.exe
+>> help
+>> holes
+>> q
+```
+Other features:
+```zsh
+python3 PeAnalyzer.py -f tests/tls_upx.exe
+```
+```zsh
+python3 SignatureMatcher.py -f tests/tls_upx.exe
+```
+To check file on VirusTotal, you need to have an api key. For the experiment, we provide one key. Make sure to connect to the internet and you may need to re-run to make it works (because of the internet):
+```zsh
+echo f4008db665dba98aa1d22766cd4befea393b5505a4f9041d84005e03be5a69b1 > VirusTotalApiKey
+python3 VirusTotalClient.py -f tests/tls_upx.exe
+```
+
+If you want to checkout the old verion of the file (with old version of xml folder) after correcting run
+
+```git
+git checkout 7d611285bfc0ff1ee5b299b875eafc7afb3f09da
+```
 
 ---
 
