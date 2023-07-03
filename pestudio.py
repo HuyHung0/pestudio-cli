@@ -4,6 +4,7 @@ import argparse
 from SignatureMatcher import SignatureMatcher
 from PeAnalyzer import PeAnalyzer
 from VirusTotalClient import VirusTotalClient
+from HolesDetection import HolesDetection
 import prettytable
 import re
 import constants
@@ -40,6 +41,7 @@ def parseCommandLineArguments():
 	parser.add_argument("-j", "--json", help="Format output as JSON.", action="store_true", dest="json")
 	parser.add_argument("--interactive", help="Use the tool in interactive mode.", action="store_true", dest="interactive")
 	parser.add_argument("-d", "--dump_resources", help="Dump every resource to a file (with name or ID as filename) in folder ./resources.", action="store_true", dest="dumpRes")
+	parser.add_argument("--holes", help="Show the holes in the PE file.", action="store_true", dest="holes")
 	return parser.parse_args()
 
 def parseIndicators():
@@ -225,6 +227,7 @@ def interactiveMode(file = None):
 	matcher = None
 	vt = None
 	print("Entering interactive mode...")
+	print("Type help for a list of commands")
 	if file is None:
 		print("Please specify file to analyze or type help")
 	else:
@@ -235,6 +238,7 @@ def interactiveMode(file = None):
 			peAnalyzer = PeAnalyzer(file)
 			matcher = SignatureMatcher(file)
 			vt = VirusTotalClient(file)
+			holesDetection = HolesDetection(file)
 	
 	def complete(text, state):
 		text = text.replace("~", os.path.expanduser("~"))
@@ -268,6 +272,7 @@ def interactiveMode(file = None):
 					peAnalyzer = PeAnalyzer(file)
 					matcher = SignatureMatcher(file)
 					vt = VirusTotalClient(file)
+					holesDetection = HolesDetection(file)
 		elif user_in.startswith("yara ") or user_in.startswith("y "):
 				args = user_in.split(" ")
 				if len(args) > 2:
@@ -321,6 +326,8 @@ def interactiveMode(file = None):
 					print("\t" + url)
 			else:
 				print("No URL found in the file's strings")
+		elif user_in == "holes":
+			holesDetection.printHolesInformation()
 		else:
 			if user_in != "help":
 				print("Command '" + user_in + "' is unknown.")
@@ -342,6 +349,7 @@ def interactiveMode(file = None):
 			print("\tstrings -a - show all strings we can find in the PE file")
 			print("\tstrings -b - show blacklisted strings we can find in the PE file")
 			print("\tu/urls - list all URLs found in the PE file")
+			print("\tholes - show data outside sections")
 			print("\thelp - print this help text")
 		
 		no_user_in = True
