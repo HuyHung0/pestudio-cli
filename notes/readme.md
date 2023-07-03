@@ -1,11 +1,13 @@
-- [Identify rrors and correction results](#identify-rrors-and-correction-results)
+- [Identify errors and correction results](#identify-errors-and-correction-results)
   - [no attribute 'has\_signature'](#no-attribute-has_signature)
   - [KeyError: \<MACHINE\_TYPES.I386: 332\>](#keyerror-machine_typesi386-332)
   - [NameError: name 'report' is not defined](#nameerror-name-report-is-not-defined)
   - [TypeError: __getitem__(): incompatible function arguments.](#typeerror-getitem-incompatible-function-arguments)
+- [Hole detection feature](#hole-detection-feature)
+  - [Theories](#theories)
 
 
-# Identify rrors and correction results
+# Identify errors and correction results
 
 ## no attribute 'has_signature'
 
@@ -54,3 +56,17 @@ Corrections: change the index `-1` to `len(...)-1`.
 Result:
 
 ![image](images/readme/screenshot_01-07-2023_14h30m43.png)
+
+# Hole detection feature
+
+This part is about implementing a holde detection feature.
+
+## Theories
+
+<https://ivanlef0u.fr/repo/madchat/vxdevl/papers/winsys/pefile/pefile.htm>
+
+<https://i.stack.imgur.com/0DdKh.png>
+
+<https://stackoverflow.com/questions/12416054/pe-file-format-what-is-between-the-section-table-and-the-first-section>
+
+<http://www.openrce.org/reference_library/files/reference/PE%20Format.pdf>

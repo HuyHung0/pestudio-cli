@@ -1,10 +1,8 @@
 
 - [About](#about)
   - [To do](#to-do)
+  - [Notes](#notes)
 - [pestudio-cli](#pestudio-cli)
-  - [Some errors and Correction results](#some-errors-and-correction-results)
-    - [Identify some errors](#identify-some-errors)
-    - [Correction results](#correction-results)
   - [Goal](#goal)
   - [Dependencies](#dependencies)
 
@@ -15,11 +13,23 @@ This is a project from [Forensics class at Eurecom (spring 2023)](https://www.eu
 ## To do
 
 - [ ] Update the project pestudio-cli (now it throws exceptions due to changes to the lief library).
-  - [ ] Check old lief and new lief to be not miss any errors.
 
 - [ ] Update it with the newer data and features of pestudio.
 
 - [ ] Add a hole-detection feature which detects whether there is any data "outside" of sections.
+
+## Notes
+
+In [notes/](notes/) folder:
+
+- [notes/readme.md](notes/readme.md): Contain all a note with screenshots of some errors and solution.
+
+
+---
+
+The part below is originally from pestudio-cli
+
+---
 
 # pestudio-cli
 
